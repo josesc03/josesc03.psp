@@ -86,7 +86,7 @@ public class AgendaContactos {
 
         Contacto newContacto = new Contacto(nombre, telefono, apellidos, correo_electronico);
         agenda.put(nombre, newContacto);
-        System.out.println("Contacto insertado correctamente.\n");
+        System.out.println("Contacto insertado correctamente.\n ");
 
         try {
             Thread.sleep(3000);
