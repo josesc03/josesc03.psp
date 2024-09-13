@@ -227,20 +227,19 @@ public class AgendaContactos {
         @Override
         public String toString() {
             StringBuilder sb = new StringBuilder();
-            sb.append("Contacto{");
-            sb.append("nombre=").append(nombre);
+            sb.append("---Contacto---\n");
+            sb.append("Nombre=\n").append(nombre);
 
             if (apellidos != "none") {
-                sb.append(", apellidos=").append(apellidos);
+                sb.append("Apellidos=\n").append(apellidos);
             }
 
             sb.append(", telefono=").append(telefono);
             
             if (correo_electronico != "none") {
-                sb.append(", correo_electronico=").append(correo_electronico);
+                sb.append("Correo electronico=\n").append(correo_electronico);
             }
 
-            sb.append('}');
             return sb.toString();
 
         }
