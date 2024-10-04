@@ -9,7 +9,10 @@ public class AgendaContactos {
 
     //3) You are asked to implement a contact book using a Hash table. Define the "Contact" object with the attributes you want. To reference them in the hash table you will use the first name (without the last name, to simplify it). You must code 1 query method, another for creating contacts and another for modifying the data of 1 contact. The application will be console type, it will show the options menu and respond to the commands entered. 
 
-        Scanner sc = new Scanner(System.in);
+    Scanner sc;
+
+        sc = new Scanner(System.in);
+
         boolean menuloop = true;
         HashMap<String, Contacto> agendaContactos = new HashMap<>();
 
@@ -31,31 +34,20 @@ public class AgendaContactos {
 
                 try {
                     eleccion = Integer.parseInt(sc.nextLine());
-                } catch (Exception e) {
-                    System.out.println("Tiene que elegir una opcion entre 1 y 5.");
+                    System.out.println("\n");
+                } catch (NumberFormatException e) {
+                    System.out.println("Tiene que elegir una opcion entre 1 y 5.\n");
                 }
             }
 
             switch (eleccion) {
 
-                case 1:
-                    crearContacto(sc, agendaContactos);
-                    break;
-                case 2:
-                    buscarContacto(sc, agendaContactos);
-                    break;
-                case 3:
-                    eliminarContacto(sc, agendaContactos);
-                    break;
-                case 4:
-                    modificarContacto(sc, agendaContactos);
-                    break;
-                case 5:
-                    menuloop = false;
-                    break;
-                default:
-                    System.err.println("Has burlado el sistema");
-                    break;
+                case 1 -> crearContacto(sc, agendaContactos);
+                case 2 -> buscarContacto(sc, agendaContactos);
+                case 3 -> eliminarContacto(sc, agendaContactos);
+                case 4 -> modificarContacto(sc, agendaContactos);
+                case 5 -> menuloop = false;
+                default -> System.err.println("Has burlado el sistema");
             }
         } while (menuloop);
 
@@ -63,7 +55,7 @@ public class AgendaContactos {
 
     }
 
-    public static void crearContacto(Scanner sc, HashMap<String, Contacto> agenda) {
+    static void crearContacto(Scanner sc, HashMap<String, Contacto> agenda) {
 
         String nombre;
         String apellidos;
@@ -94,11 +86,15 @@ public class AgendaContactos {
 
         Contacto newContacto = new Contacto(nombre, telefono, apellidos, correo_electronico);
         agenda.put(nombre, newContacto);
-        System.out.println("Contacto insertado correctamente.");
+        System.out.println("Contacto insertado correctamente.\n ");
 
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+        }
     }
 
-    public static void buscarContacto(Scanner sc, HashMap<String, Contacto> agenda) {
+    static void buscarContacto(Scanner sc, HashMap<String, Contacto> agenda) {
 
         String nombre;
         System.out.print("Ingrese el nombre del contacto: ");
@@ -107,11 +103,19 @@ public class AgendaContactos {
 
         if (contactobuscado != null) {
             System.out.println("Datos del contacto\n==================");
-            System.out.println(contactobuscado.toString());
+            System.out.println(contactobuscado.toString() + "\n");
+        } else {
+            System.out.println("No existe un contacto con ese nombre.\n");
         }
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+        }
+
     }
 
-    public static void eliminarContacto(Scanner sc, HashMap<String, Contacto> agenda) {
+    static void eliminarContacto(Scanner sc, HashMap<String, Contacto> agenda) {
 
         String nombre;
         System.out.print("Ingrese el nombre del contacto: ");
@@ -121,12 +125,19 @@ public class AgendaContactos {
         if (contactobuscado != null) {
             agenda.remove(nombre);
             System.out.println("Contacto eliminado\n==================");
-            System.out.println(contactobuscado.getNombre());
+            System.out.println(contactobuscado.getNombre() + "\n");
+        } else {
+            System.out.println("No existe un contacto con ese nombre.\n");
+        }
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
         }
 
     }
 
-    public static void modificarContacto(Scanner sc, HashMap<String, Contacto> agenda) {
+    static void modificarContacto(Scanner sc, HashMap<String, Contacto> agenda) {
 
         String nombre;
         System.out.print("Ingrese el nombre del contacto: ");
@@ -179,29 +190,36 @@ public class AgendaContactos {
             contactobuscado.getNombre();
             Contacto newContacto = new Contacto(nombre, telefono, apellidos, correo_electronico);
             agenda.put(nombre, newContacto);
-            System.out.println("Contacto modificado correctamente.");
+            System.out.println("Contacto modificado correctamente.\n");
+        } else {
+            System.out.println("No existe un contacto con ese nombre\n");
+        }
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
         }
 
     }
 
     static class Contacto {
 
-        private String nombre;
-        private String apellidos;
-        private String telefono;
-        private String correo_electronico;
+        private final String nombre;
+        private final String apellidos;
+        private final String telefono;
+        private final String correo_electronico;
 
         public Contacto(String nombre, String telefono, String apellidos, String correo_electronico) {
             this.nombre = nombre;
             this.telefono = telefono;
             
-            if (apellidos == "-1") {
+            if (apellidos.equals("-1")) {
                 this.apellidos = "None";
             } else {
                 this.apellidos = apellidos;
             }
 
-            if (correo_electronico == "-1") {
+            if (correo_electronico.equals("-1")) {
                 this.correo_electronico = "None";
             } else {
                 this.correo_electronico = correo_electronico;
@@ -227,20 +245,18 @@ public class AgendaContactos {
         @Override
         public String toString() {
             StringBuilder sb = new StringBuilder();
-            sb.append("Contacto{");
-            sb.append("nombre=").append(nombre);
+            sb.append("Nombre=").append(nombre).append("\n");
 
-            if (apellidos != "none") {
-                sb.append(", apellidos=").append(apellidos);
+            if (!apellidos.equals("None")) {
+                sb.append("Apellidos=").append(apellidos).append("\n");
             }
 
-            sb.append(", telefono=").append(telefono);
+            sb.append("Telefono=").append(telefono).append("\n");
             
-            if (correo_electronico != "none") {
-                sb.append(", correo_electronico=").append(correo_electronico);
+            if (!correo_electronico.equals("None")) {
+                sb.append("Correo electronico=").append(correo_electronico).append("\n");
             }
 
-            sb.append('}');
             return sb.toString();
 
         }
